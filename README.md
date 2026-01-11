@@ -40,7 +40,7 @@ Sistema simples para prever se um voo vai chegar **no horário ou atrasado**, in
 
 ## 🔹 Configuração
 
-1. Adicione uma API KEY nos arquivos `.env` :
+1. Crie um arquivo .env dentro do diretório weather/ e um na raiz:
 
 ```env
 OPENWEATHER_API_KEY=sua_chave_aqui
