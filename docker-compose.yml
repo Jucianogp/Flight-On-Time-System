@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  model:
+    build: ./model
+    container_name: model-api
+    ports:
+      - "8001:8000"
+    command: "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    restart: always
+
+  weather:
+    build: ./weather
+    container_name: weather-api
+    ports:
+      - "8002:8000"
+    environment:
+      OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY}
+    command: "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    restart: always
+
+  api:
+    build: ./api
+    container_name: flight-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - model
+      - weather
+    environment:
+      MODEL_SERVICE_URL: "http://model:8000"
+      WEATHER_SERVICE_URL: "http://weather:8000"
+    command: "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    restart: always
